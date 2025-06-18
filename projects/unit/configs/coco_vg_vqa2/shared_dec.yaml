@@ -26,17 +26,17 @@ evaluation:
   - type: vqa_accuracy
     datasets:
     - vqa2
-  - type: detection_mean_ap
-    key: detection_mean_ap
-    datasets:
-    - detection_coco
-    - detection_visual_genome
-    params:
-      dataset_json_files:
-        detection_coco:
-          val: ${env.data_dir}/datasets/coco/detection_2017/annotations/annotations/instances_val2017.json
-        detection_visual_genome:
-          val: ${env.data_dir}/datasets/visual_genome/detection_split_by_coco_2017/annotations/instances_val_split_by_coco_2017.json
+  # - type: detection_mean_ap
+  #   key: detection_mean_ap
+  #   datasets:
+  #   - detection_coco
+  #   - detection_visual_genome
+  #   params:
+  #     dataset_json_files:
+  #       detection_coco:
+  #         val: ${env.data_dir}/datasets/coco/detection_2017/annotations/annotations/instances_val2017.json
+  #       detection_visual_genome:
+  #         val: ${env.data_dir}/datasets/visual_genome/detection_split_by_coco_2017/annotations/instances_val_split_by_coco_2017.json
 
 optimizer:
   type: adam_w_skip_params_with_zero_grad  # skip update on unused params in a batch
@@ -60,16 +60,17 @@ training:
   lr_scheduler: true
   lr_ratio: 0.1
   batch_size: 64
-  max_updates: 450000
-  checkpoint_interval: 10000
-  evaluation_interval: 10000
+  max_updates: 45000
+  checkpoint_interval: 1000
+  evaluation_interval: 1000
   dataset_size_proportional_sampling: false
-  early_stop:
-    enabled: false
-    criteria: vqa2/vqa_accuracy
-    minimize: false
+  # early_stop:
+  #   enabled: false
+  #   criteria: vqa2/vqa_accuracy
+  #   minimize: false
   stdout_capture: false
   find_unused_parameters: true
+  tensorboard: true
 
 checkpoint:
   max_to_keep: 5

@@ -184,7 +184,19 @@ class RandomResize(BaseProcessor):
         size = random.choice(self.sizes)
         return resize(img, target, size, self.max_size)
 
+@registry.register_processor("detection_resize")
+class Resize(BaseProcessor):
+    def __init__(self, size, max_size=None):
+        # 兼容整数或 tuple 形式的 size
+        if isinstance(size, int):
+            self.size = size
+        else:
+            self.size = list(size)
+        self.max_size = max_size
 
+    def __call__(self, img: Tensor, target: Optional[dict] = None):
+        return resize(img, target, self.size, self.max_size)
+    
 @registry.register_processor("detection_random_select")
 class RandomSelect(BaseProcessor):
     """

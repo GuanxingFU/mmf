@@ -17,14 +17,25 @@ dataset_config:
               do_lower_case: true
           mask_probability: 0
           max_seq_length: 25
+      train_image_processor:
+        type: torchvision_transforms
+        params:
+          transforms:
+            - type: Resize
+              params:
+                size: [384,384]
+            - ToTensor
+            - type: Normalize
+              params:
+                mean: [0.485, 0.456, 0.406]
+                std: [0.229, 0.224, 0.225]
       image_processor:
         type: torchvision_transforms
         params:
           transforms:
-            - type: ResizeShortest
+            - type: Resize
               params:
-                min_size: 800
-                max_size: 1333
+                size: [384,384]
             - ToTensor
             - type: Normalize
               params:

@@ -1742,23 +1742,17 @@ class DETRImageAndTargetProcessor(BaseProcessor):
         self.training_transform = T.Compose(
             [
                 T.RandomHorizontalFlip(),
-                T.RandomSelect(
-                    T.RandomResize(train_image_sizes, max_size=config.max_size),
-                    T.Compose(
-                        [
-                            T.RandomResize(list(config.train_resize_random_sizes)),
-                            T.RandomSizeCrop(*config.train_crop_size),
-                            T.RandomResize(train_image_sizes, max_size=config.max_size),
-                        ]
-                    ),
-                ),
+                # T.RandomResize([384], max_size=384),
+                T.Resize((384, 384)),
                 T.ToTensor(),
                 T.Normalize(IMAGE_COLOR_MEAN, IMAGE_COLOR_STD),
             ]
         )
         self.inference_transform = T.Compose(
             [
-                T.RandomResize([config.test_image_size], max_size=config.max_size),
+                # T.RandomResize([config.test_image_size], max_size=config.max_size),
+                # T.RandomResize([384], max_size=384),
+                T.Resize((384, 384)),
                 T.ToTensor(),
                 T.Normalize(IMAGE_COLOR_MEAN, IMAGE_COLOR_STD),
             ]

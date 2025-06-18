@@ -73,8 +73,12 @@ class TorchvisionTransforms(BaseProcessor):
         # Support both dict and normal mode
         if isinstance(x, collections.abc.Mapping):
             x = x["image"]
+            img = self.transform(x)
+            # print(f"##############Transformed image size: {img.shape}")
             return {"image": self.transform(x)}
         else:
+            img = self.transform(x)
+            # print(f"##############Transformed image size: {img.shape}")
             return self.transform(x)
 
 
